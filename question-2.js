@@ -8,27 +8,33 @@ const key = { "headers": {
 const resultsContainer = document.querySelector("body");
 
 
-async function dontKnowYet () {
+async function getGames () {
 
-    const response = await fetch(url, key);
+    try{
+        const response = await fetch(url, key);
 
-    const data = await response.json();
-
-    const games = data.results;
-
-    resultsContainer.innerHTML = "";
-
-    for(let i = 0; i < games.length; i++){
-        console.log(games[i].name, games[i].rating, games[i].tags.length)
-
-        const combined = games[i].name +" "+ games[i].rating +" "+ games[i].tags.length
-
-        if (i === 8){
-            break
+        const data = await response.json();
+    
+        const games = data.results;
+    
+        resultsContainer.innerHTML = "";
+    
+        for(let i = 0; i < games.length; i++){
+            console.log(games[i].name, games[i].rating, games[i].tags.length)
+    
+            const combined = games[i].name +" "+ games[i].rating +" "+ games[i].tags.length
+    
+            if (i === 8){
+                break
+            }
+    
+            resultsContainer.innerHTML += `<div>${combined}</div>`;
         }
-
-        resultsContainer.innerHTML += `<div>${combined}</div>`;
+    }
+    catch (error) {
+        console.log(error)
+        resultsContainer.innerHTML = displayError()
     }
 }
 
-dontKnowYet();
+getGames();
